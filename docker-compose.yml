@@ -1,0 +1,7 @@
+version: '2'
+services:
+  geotriples-ws:
+    image: gioargyr/geotriples-ws:tom8
+    hostname: geotriples-ws
+    ports:
+      - "9999:8080"
