@@ -55,7 +55,7 @@ RUN wget -q https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION
 # DOWNLOAD AND BUILD
 RUN git clone https://github.com/big-data-europe/pilot-sc7-geotriples.git && \
 	cd pilot-sc7-geotriples && \
-	git checkout e6e93a6c7babaf7b05f5b61eb5e29bb7650d3f7b && \
+	git checkout 6be862c55b2c6ef206e49079e052f9701ef8df5f && \
 	mvn package
 
 RUN mkdir /resources \
