@@ -1,7 +1,32 @@
 version: '2'
 services:
-  geotriples-ws:
-    image: gioargyr/geotriples-ws:2.0.0
-    hostname: geotriples-ws
+
+  geotriples:
+    image: bde2020/geotriples-ws:1.0.0
+    container_name: geotriples
+    environment:
+      - "affinity:container==strabon"
+    volumes:
+      - <path_to_a_dir>:/resources
     ports:
       - "9999:8080"
+    links:
+      - strabon
+
+  strabon:
+    image: bde2020/strabon
+    container_name: strabon
+    volumes:
+      - <path_to_a_dir>:/resources
+    ports:
+      - "8193:8080"
+    links:
+      - postgis
+
+  postgis:
+    image: bde2020/postgis
+    container_name: postgis
+    volumes:
+      - /srv/postgis:/var/lib/postgresql/9.4/main
+    ports:
+      - "5432:5432"
