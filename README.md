@@ -7,7 +7,7 @@ Geotriples is used as service for the BDE SC7 pilot.
 Example usage
 
 Run the docker:
-$ docker run  -p 9999:8080 gioargyr/geotriples-ws:2.3.0
+$ docker run  -p 9999:8080 bde2020/geotriples-ws:1.0.0
 
 Trigger it through command line:
 $ curl -X POST -d @<filepath_to>/post_geo.json http://localhost:9999/geotriples/event -H "Content-Type:application/json" -H "Accept: application/json"
