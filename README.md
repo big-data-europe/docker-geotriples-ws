@@ -16,4 +16,4 @@ $ curl -X POST -d @<filepath_to>/changes.json http://localhost:9999/geotriples/c
 
 After it is triggered it will search for strabon @ localhost:8193 to save the triples.
 
-The testing files post_geo.json and changes.json are in file testing-files of this repo (TODO).
+The testing files post_geo.json and changes.json are in file testing-files of this repo.
