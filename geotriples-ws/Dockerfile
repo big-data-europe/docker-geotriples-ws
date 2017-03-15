@@ -41,6 +41,7 @@ RUN update-alternatives --install /usr/bin/java java $JAVA_HOME/bin/java 20000 &
 RUN apt-get update && \
 	apt-get install -y \
 	maven \
+	curl \
 	git && \
 	apt-get clean && \
 	rm -rf /var/lib/apt/lists/*
