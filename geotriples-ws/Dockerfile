@@ -55,7 +55,7 @@ RUN wget -q https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION
  && mv apache-tomcat* tomcat
 
 # DOWNLOAD AND BUILD
-RUN git clone -b testing-images https://github.com/big-data-europe/pilot-sc7-geotriples.git
+RUN git clone -b testing-images https://github.com/big-data-europe/pilot-sc7-geotriples.git \
  && cd pilot-sc7-geotriples \
  && mvn clean package
 
