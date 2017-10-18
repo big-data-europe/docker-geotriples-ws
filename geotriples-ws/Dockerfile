@@ -1,10 +1,10 @@
 ################################
 # Dockerfile for Geotriples WS #
-# BigDataEurope		       #
-#			       #
-# java 1.8.0_11		       #
-# maven 3.0.5		       #
-# git 1.9.1		       #
+# BigDataEurope                #
+#                              #
+# java 1.8.0_11                #
+# maven 3.0.5                  #
+# git 1.9.1                    #
 # tomcat 8.0.23                #
 ################################
 
@@ -38,34 +38,35 @@ RUN update-alternatives --install /usr/bin/java java $JAVA_HOME/bin/java 20000 &
 
 
 # INSTALL PREREQUISITIES
-RUN apt-get update && \
-	apt-get install -y \
+RUN apt-get update \
+ &&	apt-get install -y \
 	maven \
 	curl \
-	git && \
-	apt-get clean && \
-	rm -rf /var/lib/apt/lists/*
+	git \
+	vim \
+ && apt-get clean \
+ && rm -rf /var/lib/apt/lists/*
 
 # INSTALL TOMCAT
-RUN wget -q https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION}/v${TOMCAT_MINOR_VERSION}/bin/apache-tomcat-${TOMCAT_MINOR_VERSION}.tar.gz && \
-    wget -qO- https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION}/v${TOMCAT_MINOR_VERSION}/bin/apache-tomcat-${TOMCAT_MINOR_VERSION}.tar.gz.md5 | md5sum -c - && \
-    tar zxf apache-tomcat-*.tar.gz && \
-    rm apache-tomcat-*.tar.gz && \
-    mv apache-tomcat* tomcat
+RUN wget -q https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION}/v${TOMCAT_MINOR_VERSION}/bin/apache-tomcat-${TOMCAT_MINOR_VERSION}.tar.gz \
+ && wget -qO- https://archive.apache.org/dist/tomcat/tomcat-${TOMCAT_MAJOR_VERSION}/v${TOMCAT_MINOR_VERSION}/bin/apache-tomcat-${TOMCAT_MINOR_VERSION}.tar.gz.md5 | md5sum -c - \
+ && tar zxf apache-tomcat-*.tar.gz \
+ && rm apache-tomcat-*.tar.gz \
+ && mv apache-tomcat* tomcat
 
 # DOWNLOAD AND BUILD
-RUN git clone https://github.com/big-data-europe/pilot-sc7-geotriples.git && \
-	cd pilot-sc7-geotriples && \
-	mvn clean package
+RUN git clone -b testing-images https://github.com/big-data-europe/pilot-sc7-geotriples.git
+ && cd pilot-sc7-geotriples \
+ && mvn clean package
 
 RUN mkdir /resources \
-    && cp /pilot-sc7-geotriples/target/*.war /tomcat/webapps
+ && cp /pilot-sc7-geotriples/target/*.war /tomcat/webapps \
+ && cp /pilot-sc7-geotriples/change-mapping.ttl /resources \
+ && cp /pilot-sc7-geotriples/event-mapping.ttl /resources \
+ && cp /pilot-sc7-geotriples/id.txt /resources \
+ && rm -rf /pilot-sc7-geotriples
 
-ADD create_tomcat_admin_user.sh /create_tomcat_admin_user.sh
 ADD geotriples.sh /geotriples.sh
-ADD event-mapping.ttl /resources
-ADD change-mapping.ttl /resources
-ADD id.txt /resources
 
 RUN chmod +x /*.sh
 
